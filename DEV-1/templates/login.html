@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .split-container {
+    display: flex;
+    height: 100vh; /* full page height */
+  }
+  .split-left, .split-right {
+    flex: 1;
+    padding: 40px;
+  }
+  .split-left {
+    background-color: #f8f9fa; /* light background for register */
+    border-right: 1px solid #ddd;
+  }
+  .split-right {
+    background-color: #ffffff;
+  }
+  form {
+    max-width: 400px;
+    margin: auto;
+  }
+</style>
+
+<div class="split-container">
+  <!-- Register Form -->
+  <div class="split-left">
+    <h2 class="mb-4">Create Account</h2>
+    <form method="post" action="{{ url_for('auth.register_post') }}">
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label>First Name</label>
+        <input type="text" name="first_name" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label>Last Name</label>
+        <input type="text" name="last_name" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label>Phone</label>
+        <input type="text" name="phone" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Register</button>
+    </form>
+  </div>
+
+  <!-- Login Form -->
+  <div class="split-right">
+    <h2 class="mb-4">Log In</h2>
+    <form method="post" action="{{ url_for('auth.login_post') }}">
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-success w-100">Login</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
