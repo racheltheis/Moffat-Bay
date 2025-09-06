@@ -1,4 +1,4 @@
-import mysql.connector
+import mysql.connector 
 import bcrypt
 
 # Connect to MySQL (update with your credentials)
@@ -11,7 +11,7 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 
 # Step 1: Create Database
-cursor.execute("drop DATABASE IF EXISTS MoffatBay;")
+cursor.execute("DROP DATABASE IF EXISTS MoffatBay;")
 cursor.execute("CREATE DATABASE IF NOT EXISTS MoffatBay;")
 cursor.execute("USE MoffatBay;")
 
@@ -111,6 +111,7 @@ for t in tables:
 def hash_password(plain):
     return bcrypt.hashpw(plain.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
+# Customers
 customer_data = [
     ('CUST1001', 'Annie', 'Johansson', 'alice.johansson@email.com', 'Alice1234', '952-199-1234'),
     ('CUST1002', 'Michael', 'Lee', 'michael.lee@email.com', 'Michael123', '207-888-6789'),
@@ -124,6 +125,7 @@ for acc_num, first, last, email, pwd, phone in customer_data:
         (acc_num, first, last, email, hash_password(pwd), phone)
     )
 
+# Employees
 employee_data = [
     ('Joel', 'Smith', 'joel.smith@moffatbay.com', 'Joel12345', '763-109-1122', 'Staff'),
     ('Kendra', 'Watson', 'kendra.watson@moffatbay.com', 'Kendra123', '218-615-3344', 'Admin'),
@@ -137,12 +139,60 @@ for first, last, email, pwd, phone, role in employee_data:
         (first, last, email, hash_password(pwd), phone, role)
     )
 
-# You can keep the rest of your sample inserts for Rooms, Reservations, Payments, Reviews, Staff_Notes
-# ...
+# Rooms
+cursor.executemany("""
+    INSERT INTO Rooms (Room_Number, Room_Type, Description, Max_Guests, Price_Per_Night, Status, Image_url)
+    VALUES (%s, %s, %s, %s, %s, %s, %s)
+""", [
+    ('111', 'Double Full Beds', 'Double beds with patio view', 4, 120.00, 'Available', 'room111.jpg'),
+    ('112', 'Queen Bed', 'Queen bed with ocean view', 2, 135.00, 'Reserved', 'room112.jpg'),
+    ('211', 'Double Queen Beds', 'Double queen beds with patio view', 4, 150.00, 'Available', 'suite211.jpg'),
+    ('212', 'King Bed', 'King bed with ocean view', 2, 160.00, 'Maintenance', 'suite212.jpg')
+])
+
+# Reservations
+cursor.executemany("""
+    INSERT INTO Reservations (CustomerID, RoomID, Check_In_Date, Check_Out_Date, Num_Guests, Total_Price, Status)
+    VALUES (%s, %s, %s, %s, %s, %s, %s)
+""", [
+    (1, 1, '2025-09-01', '2025-09-03', 2, 360.00, 'Confirmed'),
+    (2, 2, '2025-09-10', '2025-09-17', 2, 810.00, 'Pending'),
+    (3, 3, '2025-09-15', '2025-09-20', 3, 640.00, 'Cancelled')
+])
+
+# Payments
+cursor.executemany("""
+    INSERT INTO Payments (ReservationID, Amount, Payment_Method, Payment_Status)
+    VALUES (%s, %s, %s, %s)
+""", [
+    (1, 450.00, 'Credit_Card', 'Paid'),
+    (2, 675.00, 'Paypal', 'Failed'),
+    (3, 160.00, 'Debit_Card', 'Refunded')
+])
+
+# Reviews
+cursor.executemany("""
+    INSERT INTO Reviews (CustomerID, RoomID, Rating, Comment)
+    VALUES (%s, %s, %s, %s)
+""", [
+    (1, 1, 5, 'We loved our stay at Moffat Bay! The staff was fantastic!'),
+    (2, 2, 4, 'The ammentities were great!'),
+    (3, 3, 3, 'We liked the location and amenities, but thought our room felt outdated.')
+])
+
+# Staff Notes
+cursor.executemany("""
+    INSERT INTO Staff_Notes (ReservationID, EmployeeID, Note_Text)
+    VALUES (%s, %s, %s)
+""", [
+    (1, 1, 'Guest requests early check-in (1pm).'),
+    (2, 3, 'Guest requests a call to discuss check in on 9/1.'),
+    (3, 2, 'Guest is celebrating 1st wedding anniversary.')
+])
 
 # Commit and close
 conn.commit()
 cursor.close()
 conn.close()
 
-print("Database and tables created successfully with hashed passwords!")
+print("Database, tables, and sample data created successfully with hashed passwords!")
