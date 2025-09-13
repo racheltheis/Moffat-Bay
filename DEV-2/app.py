@@ -155,3 +155,46 @@ def review(reservation_id):
 
     flash("Thank you for your review!")
     return redirect(url_for("dashboard"))
+
+# --- About Us Page --- 
+@app.route("/about")
+    def about():   
+        return render_template("about.html")
+    
+# --- Summary Page --- 
+@app.route("/summary")
+def summary():
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    # Total customers
+    cur.execute("SELECT COUNT(*) FROM customers")
+    total_customers = cur.fetchone()[0]
+
+    # Total reservations
+    cur.execute("SELECT COUNT(*) FROM reservations")
+    total_reservations = cur.fetchone()[0]
+
+    # Total revenue (completed payments only)
+    cur.execute("SELECT IFNULL(SUM(amount), 0) FROM payments WHERE status = 'completed'")
+    total_revenue = cur.fetchone()[0]
+
+    # Average review rating
+    cur.execute("SELECT ROUND(AVG(rating), 1) FROM reviews")
+    avg_rating = cur.fetchone()[0] or 0
+
+    # Available rooms
+    cur.execute("SELECT COUNT(*) FROM rooms WHERE available = 1")
+    available_rooms = cur.fetchone()[0]
+
+    conn.close()
+
+    return render_template(
+        "summary.html",
+        total_customers=total_customers,
+        total_reservations=total_reservations,
+        total_revenue=total_revenue,
+        avg_rating=avg_rating,
+        available_rooms=available_rooms
+    )
+
