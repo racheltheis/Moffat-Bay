@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Moffat Bay Lodge - Reservations</title>
+	<link href="https://fonts.googleapis.com/css2?family=Yellowtail&family=Open+Sans:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="reservation_styles.css">
+</head>
+<body>
+	<header>
+    	<nav class="navbar">
+      		<ul>
+        		<li><a href="#">HOME</a></li>
+       			<li><a href="#">ABOUT US</a></li>
+        		<li><a href="#">ATTRACTIONS</a></li>
+        		<li><a href="#">RESERVATIONS</a></li>
+        		<li class="right"><a href="#">MY ACCOUNT</a></li>
+      		</ul>
+    	</nav>
+  	</header>
+  
+
+	<section class="hero">
+    	<h1>Make a Reservation</h1>
+  	</section>
+
+	<section class="search-bar">
+		<form class="search-form">
+			<input type="text" placeholder="Check In: MM/DD/YYYY">
+			<input type="text" placeholder="Check Out: MM/DD/YYYY">
+
+    	<div class="occupancy-wrapper">
+			<select name="adults">
+				<option disabled selected>Adults</option>
+				<option>1 Adult</option>
+				<option>2 Adults</option>
+				<option>3 Adults</option>
+				<option>4 Adults</option>
+			</select>
+			<select name="children">
+				<option disabled selected>Children</option>
+				<option>0 Children</option>
+				<option>1 Child</option>
+				<option>2 Children</option>
+				<option>3 Children</option>
+				<option>4 Children</option>
+			</select>
+		</div>
+
+    	<button type="submit">Go</button>
+		</form>
+  	</section>
+
+	<section class="rooms">
+    	<div class="room-card" onclick="selectRoom('Double Full Beds')">
+      		<h3>Double Full Beds</h3>
+      		<p>Price $$$ / Night</p>
+      		<div class="room-image">
+      			<img src="Double_full_bed.jpg" alt="Double Full Beds Room">
+      		</div>
+    	</div>
+
+	<div class="room-card" onclick="selectRoom('Queen Bed Room')">
+      <h3>Queen Bed</h3>
+      <p>Price $$$ / Night</p>
+      <div class="room-image">
+      	<img src="Queen_bed.jpg" alt="Queen Bed Room">
+      </div>
+    </div>
+
+	<div class="room-card" onclick="selectRoom('Double Queen Beds')">
+  		<h3>Double Queen Beds</h3>
+  		<p>Price $$$ / Night</p>
+  		<div class="room-image">
+    		<img src="Double_queen_bed.jpg" alt="Double Queen Beds Room">
+		</div>
+	</div>
+
+
+    <div class="room-card" onclick="selectRoom('King Bed')">
+      	<h3>King Bed</h3>
+      	<p>Price $$$ / Night</p>
+      	<div class="room-image">
+      		<img src="King_bed.jpg" alt="King Bed Room">
+      	</div>
+    </div>
+</section>
+
+	<footer class="footer">
+		<p>&copy; © 2025 Moffat Bay Lodge. All Rights Reserved. </p>
+  	</footer>
+
+  <!-- > <script>
+    function here
+  </script>
+  -->
+  
+</body>
+</html>
+
+
