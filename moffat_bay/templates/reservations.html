@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Moffat Bay Lodge - Reservations</title>
+	<link href="https://fonts.googleapis.com/css2?family=Yellowtail&family=Open+Sans:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{{ url_for('static', filename='reservation_styles.css') }}">
+</head>
+<body>
+	<header>
+    	<nav class="navbar">
+      		<ul>
+        		<li><a href="{{ url_for('index') }}">HOME</a></li>
+				<li><a href="{{ url_for('about') }}">ABOUT US</a></li>
+       	   		<li><a href="#">ATTRACTIONS</a></li>
+        		<li class="active"><a href="{{ url_for('reservations') }}">RESERVATIONS</a></li>
+        		<li class="right">
+					<a href="{{ url_for('auth.login_get') }}">My Account</a> |
+                	<a href="{{ url_for('auth.logout') }}">Logout</a>
+				</li>
+      		</ul>
+    	</nav>
+  	</header>
+  
+	<section class="hero">
+    	<h1>Make a Reservations</h1>
+  	</section>
+
+	<section class="search-bar">
+		<form class="search-form" method="post" action="{{ url_for('reservations') }}">
+			<label for="check_in">Check In</label>  
+			<input type="date" id="check_in" name="check_in" required>
+
+			<label for="check_out">Check Out</label>
+  			<input type="date" id="check_out" name="check_out" required>
+
+    		<div class="occupancy-wrapper">
+				<select id="adults" name="adults" required>
+					<option disabled selected value="">Adults</option>
+					<option value="1">1 Adult</option>
+					<option value="2">2 Adults</option>
+					<option value="3">3 Adults</option>
+					<option value="4">4 Adults</option>
+				</select>
+				<select id="children" name="children" >
+					<option disabled selected value="">Children</option>
+					<option value="0">0 Children</option>
+					<option value="1">1 Child</option>
+					<option value="2">2 Children</option>
+					<option value="3">3 Children</option>
+					<option value="4">4 Children</option>
+				</select>
+			</div>
+
+			<!-- Hidden fields for booking -->
+			<input type="hidden" id="room_id" name="room_id" required>
+			<input type="hidden" id="room_type" name="room_type" required>
+			<input type="hidden" id="room_price" name="room_price" required>
+
+    		<button type="submit">Go</button>
+		</form>
+  	</section>
+
+	<section class="rooms">
+    	<div class="room-card" onclick="selectRoom('1','Double Full Beds','150')">
+      		<h3>Double Full Beds</h3>
+      		<p id="price-1">Price $150 / Night</p>
+      		<div class="room-image">
+      			<img src="{{ url_for('static', filename='images/Double_full_bed.jpg') }}" alt="Double Full Beds Room">
+      		</div>
+    	</div>
+
+		<div class="room-card" onclick="selectRoom('2','Queen Bed','180')">
+			<h3>Queen Bed</h3>
+			<p id="price-2">Price $180 / Night</p>
+			<div class="room-image">
+				<img src="{{ url_for('static', filename='images/Queen_bed.jpg') }}" alt="Queen Bed Room">
+			</div>
+		</div>
+
+		<div class="room-card" onclick="selectRoom('3','Double Queen Beds','200')">
+			<h3>Double Queen Beds</h3>
+			<p id="price-3">Price $200 / Night</p>
+			<div class="room-image">
+				<img src="{{ url_for('static', filename='images/Double_queen_bed.jpg') }}" alt="Double Queen Beds Room">
+			</div>
+		</div>
+
+    	<div class="room-card" onclick="selectRoom('4','King Bed','220')">
+      		<h3>King Bed</h3>
+      		<p id="price-4">Price $220 / Night</p>
+      		<div class="room-image">
+				<img src="{{ url_for('static', filename='images/King_bed.jpg') }}" alt="King Bed Room">
+      		</div>
+    	</div>
+	</section>
+
+	<footer class="footer">
+		<p>&copy; 2025 Moffat Bay Lodge. All Rights Reserved. </p>
+  	</footer>
+
+  	<script>
+		function selectRoom(id, type, price) {
+			document.getElementById("room_id").value = id;
+			document.getElementById("room_type").value = type;
+			document.getElementById("room_price").value = price;
+
+			let adults = document.getElementById("adults").value || "0";
+			let children = document.getElementById("children").value || "0";
+
+			alert(
+				"Selected Room: " + type +
+				"\nPrice: $" + price + " / night" +
+				"\nAdults: " + adults +
+				"\nChildren: " + children
+			);
+		}
+	</script>
+</body>
+</html>

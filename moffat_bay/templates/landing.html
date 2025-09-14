@@ -1,0 +1,70 @@
+<!-- Moffat Bay Landing Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moffat Bay Lodge</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&family=Open+Sans:wght@300;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='index_styles.css') }}">
+</head>
+<body>
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Navigation -->
+    <header class="menubar">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('about') }}">ABOUT US</a></li>
+                <li><a href="#">Attractions</a></li>
+                <li class="active"><a href="{{ url_for('reservations') }}">RESERVATIONS</a></li>
+                <li class="right">
+					<a href="{{ url_for('auth.login_get') }}">My Account</a></li>|
+                	<a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Section -->
+    <section class="col">
+        <!-- Left Column: Logo + Image -->
+        <div class="col-left">
+            <h1 class="logo-text">Moffat Bay Lodge</h1>
+            <img src="{{ url_for('static', filename='images/moffatbay.png') }}" 
+                 alt="Moffat Bay Lodge" class="lodge-img">
+        </div>
+
+        <!-- Right Column: Info + CTA -->
+        <div class="col-right">
+            <h2>Find Your Happy Place</h2>
+            <p class="text-sanslight-large">Book your stay today and enjoy all that Moffat Bay Lodge has to offer</p>
+            <p class="text-sanslight-small">
+                From relaxing at the beach to adventuring at sea, Moffat Bay Lodge has something for everyone. 
+                Family-owned since 1935, our lodge boasts incredible views, excellent food and beverage options,
+                and unforgettable experiences.<br>
+                <b>Come see for yourself - your perfect getaway awaits!</b>
+            </p>
+            <li class="booknow_button"><a href="{{ url_for('reservations') }}"> Book Now</a></li>
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Moffat Bay Lodge. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
