@@ -1,12 +1,13 @@
 from flask import Flask, render_template
 from auth import auth_bp
+from reservations import res_bp
 
 app = Flask(__name__)
 app.secret_key = "super_secret_key"
 
 # Register Blueprints
 app.register_blueprint(auth_bp)
-
+app.register_blueprint(res_bp)
 # Landing page (Home)
 @app.route("/")
 def index():
@@ -26,6 +27,16 @@ def reservations():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+# ------------------------
+# confirm Page
+# ------------------------
+@app.route("/confirm")
+def confirm():
+    return render_template("confirm.html")
+
+
+
 
 
 

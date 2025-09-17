@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moffat Bay Lodge - Confirm Reservation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&family=Open+Sans:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='confirm_styles.css') }}">
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('index') }}">HOME</a></li>
+            <li><a href="{{ url_for('about') }}">ABOUT US</a></li>
+            <li><a href="#">ATTRACTIONS</a></li>
+            <li class="active"><a href="{{ url_for('res.reservations') }}">RESERVATIONS</a></li>
+            <li class="right">
+                <a href="{{ url_for('auth.login_get') }}">My Account</a> |
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Confirm Reservation</h1>
+</section>
+
+<section class="confirmation">
+    <div class="box">
+
+        <p><b>Name:</b> {{ name }}</p>
+        <p><b>Phone number:</b> {{ phone }}</p>
+        <p><b>Email:</b> {{ email }}</p>
+        <p><b>Dates of Stay:</b> {{ checkin }} - {{ checkout }}</p>
+        <p><b>Guests:</b> {{ adults }} Adults, {{ children }} Children</p>
+        <p><b>Room Booked:</b> {{ room_type }} (${{ price }}/night)</p>
+        <p><b>Total:</b> ${{ total }}</p>
+
+    </div>
+
+    <div class="button-group">
+
+        <form method="POST" action="{{ url_for('res.confirm_post', reservationid=reservationid) }}">
+        <button type="submit" name="action" value="submit" class="btn btn-confirm">Confirm Booking</button>
+         <button type="submit" name="action" value="cancel" class="btn btn-cancel">Cancel</button>
+        </form>
+
+       
+    </div>
+</section>
+
+<footer class="footer">
+    <p>&copy; 2025 Moffat Bay Lodge. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

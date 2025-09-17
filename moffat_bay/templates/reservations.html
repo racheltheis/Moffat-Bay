@@ -1,121 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Moffat Bay Lodge - Reservations</title>
-	<link href="https://fonts.googleapis.com/css2?family=Yellowtail&family=Open+Sans:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="{{ url_for('static', filename='reservation_styles.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moffat Bay Lodge - Reservations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&family=Open+Sans:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reservation_styles.css') }}">
+    <style>
+        .room-card {
+            display: inline-block;
+            width: 220px;
+            margin: 10px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .room-card.selected {
+            border: 3px solid #FF9800;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .room-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px 8px 0 0;
+        }
+    </style>
 </head>
 <body>
-	<header>
-    	<nav class="navbar">
-      		<ul>
-        		<li><a href="{{ url_for('index') }}">HOME</a></li>
-				<li><a href="{{ url_for('about') }}">ABOUT US</a></li>
-       	   		<li><a href="#">ATTRACTIONS</a></li>
-        		<li class="active"><a href="{{ url_for('reservations') }}">RESERVATIONS</a></li>
-        		<li class="right">
-					<a href="{{ url_for('auth.login_get') }}">My Account</a> |
-                	<a href="{{ url_for('auth.logout') }}">Logout</a>
-				</li>
-      		</ul>
-    	</nav>
-  	</header>
+
   
-	<section class="hero">
-    	<h1>Make a Reservations</h1>
-  	</section>
+<header>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('index') }}">HOME</a></li>
+            <li><a href="{{ url_for('about') }}">ABOUT US</a></li>
+            <li><a href="#">ATTRACTIONS</a></li>
+            <li class="active"><a href="{{ url_for('res.reservations') }}">RESERVATIONS</a></li>
+            <li class="right">
+                <a href="{{ url_for('auth.login_get') }}">My Account</a> |
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+</header>
 
-	<section class="search-bar">
-		<form class="search-form" method="post" action="{{ url_for('reservations') }}">
-			<label for="check_in">Check In</label>  
-			<input type="date" id="check_in" name="check_in" required>
+<section class="hero">
+       <!-- Flash Messages -->
+     {% with messages = get_flashed_messages(with_categories=true) %}
+     {% if messages %}
+     <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
 
-			<label for="check_out">Check Out</label>
-  			<input type="date" id="check_out" name="check_out" required>
+    <h1>Make a Reservation</h1>
+</section>
 
-    		<div class="occupancy-wrapper">
-				<select id="adults" name="adults" required>
-					<option disabled selected value="">Adults</option>
-					<option value="1">1 Adult</option>
-					<option value="2">2 Adults</option>
-					<option value="3">3 Adults</option>
-					<option value="4">4 Adults</option>
-				</select>
-				<select id="children" name="children" >
-					<option disabled selected value="">Children</option>
-					<option value="0">0 Children</option>
-					<option value="1">1 Child</option>
-					<option value="2">2 Children</option>
-					<option value="3">3 Children</option>
-					<option value="4">4 Children</option>
-				</select>
-			</div>
+<section class="search-bar">
+    <form id="reservationForm" method="post" action="{{ url_for('res.reservations_post') }}">
+        <label for="check_in">Check In</label>
+        <input type="date" id="check_in" name="check_in" required>
 
-			<!-- Hidden fields for booking -->
-			<input type="hidden" id="room_id" name="room_id" required>
-			<input type="hidden" id="room_type" name="room_type" required>
-			<input type="hidden" id="room_price" name="room_price" required>
+        <label for="check_out">Check Out</label>
+        <input type="date" id="check_out" name="check_out" required>
 
-    		<button type="submit">Go</button>
-		</form>
-  	</section>
+        <div class="occupancy-wrapper">
+            <select id="adults" name="adults" required>
+                <option disabled selected value="">Adults</option>
+                <option value="1">1 Adult</option>
+                <option value="2">2 Adults</option>
+                <option value="3">3 Adults</option>
+                <option value="4">4 Adults</option>
+            </select>
+            <select id="children" name="children">
+                <option disabled selected value="">Children</option>
+                <option value="0">0 Children</option>
+                <option value="1">1 Child</option>
+                <option value="2">2 Children</option>
+                <option value="3">3 Children</option>
+                <option value="4">4 Children</option>
+            </select>
+        </div>
 
-	<section class="rooms">
-    	<div class="room-card" onclick="selectRoom('1','Double Full Beds','150')">
-      		<h3>Double Full Beds</h3>
-      		<p id="price-1">Price $150 / Night</p>
-      		<div class="room-image">
-      			<img src="{{ url_for('static', filename='images/Double_full_bed.jpg') }}" alt="Double Full Beds Room">
-      		</div>
-    	</div>
+        <!-- Hidden fields for JS to fill when room is selected -->
+        <input type="hidden" id="room_id" name="roomid">
+        <input type="hidden" id="room_type" name="room_type">
+        <input type="hidden" id="room_price" name="price">
 
-		<div class="room-card" onclick="selectRoom('2','Queen Bed','180')">
-			<h3>Queen Bed</h3>
-			<p id="price-2">Price $180 / Night</p>
-			<div class="room-image">
-				<img src="{{ url_for('static', filename='images/Queen_bed.jpg') }}" alt="Queen Bed Room">
-			</div>
-		</div>
+        <button type="submit">Go</button>
+    </form>
+</section>
 
-		<div class="room-card" onclick="selectRoom('3','Double Queen Beds','200')">
-			<h3>Double Queen Beds</h3>
-			<p id="price-3">Price $200 / Night</p>
-			<div class="room-image">
-				<img src="{{ url_for('static', filename='images/Double_queen_bed.jpg') }}" alt="Double Queen Beds Room">
-			</div>
-		</div>
+<section class="rooms">
+    {% set room_images = {
+        'Double Full Beds': 'Double_full_bed.jpg',
+        'Queen Bed': 'Queen_bed.jpg',
+        'Double Queen Beds': 'Double_queen_bed.jpg',
+        'King Bed': 'King_bed.jpg'
+    } %}
 
-    	<div class="room-card" onclick="selectRoom('4','King Bed','220')">
-      		<h3>King Bed</h3>
-      		<p id="price-4">Price $220 / Night</p>
-      		<div class="room-image">
-				<img src="{{ url_for('static', filename='images/King_bed.jpg') }}" alt="King Bed Room">
-      		</div>
-    	</div>
-	</section>
+    {% for room in rooms %}
+        {% set img_file = room_images.get(room.Room_Type, 'default.jpg') %}
+        <div class="room-card" onclick="selectRoom(this, '{{ room.RoomID }}','{{ room.Room_Type }}','{{ room.Price_Per_Night }}')">
+            <div class="room-image">
+                <img src="{{ url_for('static', filename='images/' ~ img_file) }}" alt="{{ room.Room_Type }} Room">
+            </div>
+            <h3>{{ room.Room_Type }}</h3>
+            <p>Price ${{ room.Price_Per_Night }} / Night</p>
+        </div>
+    {% endfor %}
+</section>
 
-	<footer class="footer">
-		<p>&copy; 2025 Moffat Bay Lodge. All Rights Reserved. </p>
-  	</footer>
+<footer class="footer">
+    <p>&copy; 2025 Moffat Bay Lodge. All Rights Reserved.</p>
+</footer>
 
-  	<script>
-		function selectRoom(id, type, price) {
-			document.getElementById("room_id").value = id;
-			document.getElementById("room_type").value = type;
-			document.getElementById("room_price").value = price;
+<script>
+    let selectedRoom = null;
 
-			let adults = document.getElementById("adults").value || "0";
-			let children = document.getElementById("children").value || "0";
+    function selectRoom(element, id, type, price) {
+        document.getElementById("room_id").value = id;
+        document.getElementById("room_type").value = type;
+        document.getElementById("room_price").value = price;
 
-			alert(
-				"Selected Room: " + type +
-				"\nPrice: $" + price + " / night" +
-				"\nAdults: " + adults +
-				"\nChildren: " + children
-			);
-		}
-	</script>
+        selectedRoom = id;
+
+        document.querySelectorAll('.room-card').forEach(card => card.classList.remove('selected'));
+        element.classList.add('selected');
+    }
+
+    document.getElementById("reservationForm").addEventListener("submit", function(e){
+        if (!selectedRoom) {
+            alert("Please select a room before proceeding.");
+            e.preventDefault();
+        }
+    });
+</script>
+
+
+
 </body>
 </html>

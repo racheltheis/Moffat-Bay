@@ -17,12 +17,18 @@ body {
 }
 
 .hero h1 {
-  	font-family: 'Yellowtail', cursive;
-  	font-size: 100px;
-  	color: #16404D;
-  	margin: 0;
-  	-webkit-text-stroke: 2px #000;
-  	text-stroke: 2px #000;      
+  font-family: 'Yellowtail', cursive;
+  font-size: 100px;
+  color: #16404D;
+  margin: 0;
+  -webkit-text-stroke: 2px #000;
+
+  /* fallback for browsers that don’t support text-stroke */
+  text-shadow: 
+    -2px -2px 0 #000,
+     2px -2px 0 #000,
+    -2px  2px 0 #000,
+     2px  2px 0 #000;
 }
 
 
@@ -169,3 +175,45 @@ body {
   	margin-top: 48px;
   	font-size: 14px;
 }
+.flash-messages {
+  margin: 20px auto;
+  max-width: 800px;
+  text-align: center;
+}
+
+.flash {
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Error messages (red/yellow) */
+.flash.error {
+ background-color: #d4edda; /* Yellow background */
+  color: #b30000;            /* Bold red text */
+  border: 1px solid #b30000; /* Strong red border */
+}
+
+/* Success messages (green) */
+.flash.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Warning messages (yellow) */
+.flash.warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+/* Info messages (blue) */
+.flash.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+

@@ -1,0 +1,144 @@
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #FBF5DD;
+    color: #16404D;
+}
+
+/* Header and Navbar */
+.navbar {
+    background-color: #16404D;
+    padding: 12px 32px;
+}
+.navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+.navbar li {
+    margin-right: 32px;
+}
+.navbar li.right {
+    margin-left: auto;
+}
+.navbar a {
+    color: #FBF5DD;
+    text-decoration: none;
+    font-weight: 700;
+}
+.navbar a:hover {
+    color: #A6CDC6;
+}
+.navbar .active a {
+    color: #DDA853;
+}
+
+/* Hero Section */
+.hero {
+    width: 100%;
+    background-color: #A6CDC6;
+    text-align: center;
+    padding: 40px 0;
+    border-bottom: 4px solid #16404D;
+    box-sizing: border-box;
+}
+.hero h1 {
+    font-family: 'Yellowtail', cursive;
+    font-size: 72px;
+    color: #16404D;
+    margin: 0;
+    -webkit-text-stroke: 2px #000;
+    text-stroke: 2px #000;
+}
+
+/* Confirmation Box */
+.confirmation {
+    text-align: center;
+    padding: 40px 10%;
+}
+.box {
+    border: 2px solid #16404D;
+    background: #fff;
+    padding: 24px;
+    margin: 20px auto;
+    width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+/* Buttons */
+.button-group {
+    margin-top: 20px;
+}
+.btn {
+    padding: 12px 24px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.btn-confirm {
+    background-color: #DDA853;
+    color: #16404D;
+}
+.btn-confirm:hover {
+    background-color: #16404D;
+    color: #FBF5DD;
+}
+.btn-cancel {
+    background-color: #E74C3C;
+    color: #fff;
+}
+.btn-cancel:hover {
+    background-color: #C0392B;
+    color: #fff;
+}
+
+.flash-messages {
+  margin: 20px auto;
+  max-width: 800px;
+  text-align: center;
+}
+
+.flash {
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Error messages (red/yellow) */
+.flash.error {
+ background-color: #d4edda; /* Yellow background */
+  color: #b30000;            /* Bold red text */
+  border: 1px solid #b30000; /* Strong red border */
+}
+
+/* Success messages (green) */
+.flash.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Warning messages (yellow) */
+.flash.warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+/* Info messages (blue) */
+.flash.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+

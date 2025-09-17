@@ -13,7 +13,7 @@
 			<ul>
         		<li><a href="{{ url_for('index') }}">HOME</a></li>
         		<li><a href="#">ATTRACTIONS</a></li>
-        		<li class="active"><a href="{{ url_for('reservations') }}">RESERVATIONS</a></li>
+        		<li class="active"><a href="{{ url_for('res.reservations') }}">RESERVATIONS</a></li>
         		<li class="right">
 					<a href="{{ url_for('auth.login_get') }}">My Account</a></li>|
                 	<a href="{{ url_for('auth.logout') }}">Logout</a></li>
@@ -26,7 +26,7 @@
     	<p class="hero-subtext">
       	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     	</p>
-		<li class="booknow_button"><a href="{{ url_for('reservations') }}"> Book Now</a></li>
+		<li class="booknow_button"><a href="{{ url_for('res.reservations') }}"> Book Now</a></li>
   	</section>
 
 	<section class="contact-section">

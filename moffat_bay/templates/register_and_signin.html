@@ -15,16 +15,30 @@
             <li><a href="{{ url_for('index') }}">HOME</a></li>
             <li><a href="{{ url_for('about') }}">ABOUT US</a></li>
             <li><a href="#">ATTRACTIONS</a></li>
-            <li class="active"><a href="{{ url_for('reservations') }}">RESERVATIONS</a></li>
+            <li class="active"><a href="{{ url_for('res.reservations') }}">RESERVATIONS</a></li>
             <li class="right">
 				<a href="{{ url_for('auth.login_get') }}">My Account</a> |
                 <a href="{{ url_for('auth.logout') }}">Logout</a>
         </ul>
+       
+
     </nav>
+
+    
 </header>
 
 <header class="page-header">
-    Moffat Bay Guest Sign In
+   <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+       Moffat Bay Guest Sign In
 </header>
 
 <section class="form-section">
