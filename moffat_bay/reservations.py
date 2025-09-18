@@ -140,6 +140,28 @@ def confirm_post(reservationid):
         flash("Reservation canceled.", "warning")
     return redirect(url_for("res.reservations"))
 
+# -----------------------------
+# LOOKUP
+# -----------------------------
+@res_bp.route("/lookup", methods=["GET", "POST"])
+def lookup():
+    results, q = None, ""
+    if request.method == "POST":
+        q = request.form.get("query", "").strip()
+        conn = get_conn(); cur = conn.cursor(dictionary=True)
+        cur.execute("""
+            SELECT r.ReservationID, r.Check_In_Date, r.Check_Out_Date, r.Status, r.Total_Price,
+                   rm.Room_Type, c.Email
+            FROM Reservations r
+            JOIN Rooms rm ON rm.RoomID = r.RoomID
+            JOIN Customers c ON c.CustomerID = r.CustomerID
+            WHERE r.ReservationID = %s OR c.Email = %s
+        """, (q, q))
+        results = cur.fetchall()
+        cur.close(); conn.close()
+
+    return render_template("lookup.html", results=results, query=q)
+
 
 
 

@@ -24,7 +24,7 @@
       {% endif %}
     {% endwith %}
 
-    <!-- Navigation -->
+   <!-- Navigation -->
     <header class="menubar">
         <nav>
             <ul>
@@ -32,9 +32,19 @@
                 <li><a href="#">Attractions</a></li>
                 <li class="active"><a href="{{ url_for('res.reservations') }}">RESERVATIONS</a></li>
              
-                <li class="right">
-					<a href="{{ url_for('auth.login_get') }}">My Account</a></li>|
-                	<a href="{{ url_for('auth.logout') }}">Logout</a></li>
+              <li class="right">
+                <!-- My Account dropdown -->
+			  <li class="dropdown right">
+				<a href="javascript:void(0)" class="dropbtn">My Account</a>
+				<div class="dropdown-content">
+					<a href="{{ url_for('auth.login_get') }}">Login</a>
+					<a href="{{ url_for('res.lookup') }}">Lookup</a>
+			    </div>
+			   </li>
+
+			    <a href="{{ url_for('auth.logout') }}">Logout</a>
+			</li>
+
             </ul>
         </nav>
     </header>

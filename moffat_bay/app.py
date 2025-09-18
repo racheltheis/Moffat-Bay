@@ -36,6 +36,13 @@ def confirm():
     return render_template("confirm.html")
 
 
+# ------------------------
+# lookup Page
+# ------------------------
+@app.route("/lookup")
+def lookup():
+    return render_template("lookup.html")
+
 
 
 

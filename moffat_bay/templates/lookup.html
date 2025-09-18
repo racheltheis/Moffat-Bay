@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moffat Bay Lodge - Lookup Reservation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Yellowtail&family=Open+Sans:wght@300;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lookup_styles.css') }}">
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <ul>
+      <li><a href="{{ url_for('index') }}">HOME</a></li>
+      <li><a href="{{ url_for('about') }}">ABOUT US</a></li>
+      <li><a href="#">ATTRACTIONS</a></li>
+      <li class="active"><a href="{{ url_for('res.reservations') }}">RESERVATIONS</a></li>
+      <li class="right">
+                <!-- My Account dropdown -->
+			  <li class="dropdown right">
+				<a href="javascript:void(0)" class="dropbtn">My Account</a>
+				<div class="dropdown-content">
+					<a href="{{ url_for('auth.login_get') }}">Login</a>
+					<a href="{{ url_for('res.lookup') }}">Lookup</a>
+			    </div>
+			   </li>
+
+			    <a href="{{ url_for('auth.logout') }}">Logout</a>
+			</li>
+
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Lookup Reservation</h1>
+</section>
+
+<section class="lookup-section">
+  <form method="post" action="{{ url_for('res.lookup') }}" class="lookup-form">
+    <label for="query">Search by Reservation ID or Email</label>
+    <input id="query" name="query" placeholder="e.g., 123 or guest@email.com" 
+           value="{{ query or '' }}" required>
+    <button type="submit">Search</button>
+  </form>
+
+  {% if results is not none %}
+  <div class="results">
+    <h2>Results</h2>
+    {% if results %}
+      <ul>
+        {% for row in results %}
+        <li>
+          <span class="res-id">#{{ row.ReservationID }}</span>
+          <span class="res-email">{{ row.Email }}</span>
+          <span class="res-room">{{ row.Room_Type }}</span>
+          <span class="res-dates">{{ row.Check_In_Date }} → {{ row.Check_Out_Date }}</span>
+          <span class="res-status">{{ row.Status }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="no-results">No matching reservations.</p>
+    {% endif %}
+  </div>
+  {% endif %}
+</section>
+
+
+<footer class="footer">
+  <p>&copy; 2025 Moffat Bay Lodge. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
