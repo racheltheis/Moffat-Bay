@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Reservations</title>
+    <!-- Link your main CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Basic styling for the table */
+        main {
+            padding: 2rem;
+            max-width: 900px;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .flash {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+        }
+        .flash.success { background-color: #d4edda; color: #155724; }
+        .flash.error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- It's recommended to include your navigation bar here -->
+        <!-- Example: {% include 'navbar.html' %} -->
+        <a href="{{ url_for('index') }}">Home</a>
+    </header>
+
+    <main>
+        <h1>My Reservations</h1>
+
+        <!-- Display any flashed messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Check if there are any reservations to display -->
+        {% if reservations %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Reservation ID</th>
+                        <th>Room Type</th>
+                        <th>Check-In Date</th>
+                        <th>Check-Out Date</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through each reservation and display its details -->
+                    {% for res in reservations %}
+                    <tr>
+                        <td>{{ res.ReservationID }}</td>
+                        <td>{{ res.Room_Type }}</td>
+                        <td>{{ res.Check_In_Date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ res.Check_Out_Date.strftime('%Y-%m-%d') }}</td>
+                        <td>${{ "%.2f".format(res.Total_Price) }}</td>
+                        <td>{{ res.Status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <!-- Show this message if the customer has no reservations -->
+            <p>You have not made any reservations yet.</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <!-- Your footer content here -->
+    </footer>
+</body>
+</html>

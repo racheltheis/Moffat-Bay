@@ -46,10 +46,10 @@ def reservations_post():
     conn = get_conn(); cur = conn.cursor(dictionary=True)
     try:
         # Ensure a room of that type is available
-        cur.execute("SELECT RoomID, Price_Per_Night, Status FROM Rooms WHERE Room_Type=%s LIMIT 1", (room_type,))
+        cur.execute("SELECT RoomID, Price_Per_Night, Status FROM Rooms WHERE Room_Type=%s AND Status = 'Available' LIMIT 1", (room_type,))
         room = cur.fetchone()
-        if not room or room["Status"] != "Available":
-            flash("Selected room not available.", "error")
+        if not room:
+            flash("Selected room type is not available.", "error")
             return redirect(url_for("res.reservations"))
 
         guests = int(adults or 1) + int(children or 0)
@@ -99,9 +99,8 @@ def confirm_get(reservationid):
 
     if not res:
         flash("Reservation not found.", "error")
-        return redirect(url_for("res.reservations_get"))
+        return redirect(url_for("res.reservations"))
     
-
     # Separate variables for template
     name = f"{res['First_Name']} {res['Last_Name']}"
     phone = res.get("Phone_Number", "")
@@ -109,7 +108,7 @@ def confirm_get(reservationid):
     checkin = res["Check_In_Date"].strftime("%Y-%m-%d")
     checkout = res["Check_Out_Date"].strftime("%Y-%m-%d")
     adults = res["Num_Guests"]
-    children = 0  # Optional, if you store children separately, use it
+    children = 0
     room_type = res["Room_Type"]
     price = res["Price_Per_Night"]
     total = res["Total_Price"]
@@ -133,18 +132,58 @@ def confirm_get(reservationid):
 def confirm_post(reservationid):
     action = request.form.get("action")
     if action == "submit":
-        # logic to confirm reservation
         flash("Reservation confirmed!", "success")
     elif action == "cancel":
-        # logic to cancel reservation
         flash("Reservation canceled.", "warning")
     return redirect(url_for("res.reservations"))
 
+# ----------------------------------------
+# --- NEW: MY RESERVATIONS PAGE ---
+# ----------------------------------------
+@res_bp.get("/my-reservations")
+def my_reservations():
+    """
+    Shows a list of all reservations for the currently logged-in customer.
+    """
+    # Ensure a customer is logged in
+    if "user_id" not in session or session.get("type") != "customer":
+        flash("Please log in to view your reservations.", "error")
+        return redirect(url_for("auth.login_get"))
+
+    customer_id = session["user_id"]
+    reservations = []
+    try:
+        conn = get_conn()
+        cur = conn.cursor(dictionary=True)
+        # Query for all reservations belonging to this customer
+        cur.execute("""
+            SELECT r.ReservationID, r.Check_In_Date, r.Check_Out_Date, r.Status, r.Total_Price,
+                   rm.Room_Type
+            FROM Reservations r
+            JOIN Rooms rm ON rm.RoomID = r.RoomID
+            WHERE r.CustomerID = %s
+            ORDER BY r.Check_In_Date DESC
+        """, (customer_id,))
+        reservations = cur.fetchall()
+    except Exception as e:
+        flash(f"An error occurred while fetching your reservations: {e}", "error")
+    finally:
+        if 'cur' in locals() and cur:
+            cur.close()
+        if 'conn' in locals() and conn:
+            conn.close()
+    
+    # You will need to create a my_reservations.html template for this
+    return render_template("my_reservations.html", reservations=reservations)
+
 # -----------------------------
-# LOOKUP
+# LOOKUP (for general use)
 # -----------------------------
 @res_bp.route("/lookup", methods=["GET", "POST"])
 def lookup():
+    """
+    Allows any user to look up a reservation by EITHER Reservation ID or Email.
+    """
     results, q = None, ""
     if request.method == "POST":
         q = request.form.get("query", "").strip()
@@ -161,8 +200,3 @@ def lookup():
         cur.close(); conn.close()
 
     return render_template("lookup.html", results=results, query=q)
-
-
-
-
-

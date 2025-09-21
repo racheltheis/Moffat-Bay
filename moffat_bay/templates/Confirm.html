@@ -31,6 +31,7 @@
 <section class="confirmation">
     <div class="box">
 
+        <p><b>Reservation ID:</b> #{{ reservationid }}</p>
         <p><b>Name:</b> {{ name }}</p>
         <p><b>Phone number:</b> {{ phone }}</p>
         <p><b>Email:</b> {{ email }}</p>
@@ -45,10 +46,10 @@
 
         <form method="POST" action="{{ url_for('res.confirm_post', reservationid=reservationid) }}">
         <button type="submit" name="action" value="submit" class="btn btn-confirm">Confirm Booking</button>
-         <button type="submit" name="action" value="cancel" class="btn btn-cancel">Cancel</button>
+          <button type="submit" name="action" value="cancel" class="btn btn-cancel">Cancel</button>
         </form>
 
-       
+        
     </div>
 </section>
 
