@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS reservations;
 DROP TABLE IF EXISTS rooms;
 DROP TABLE IF EXISTS employees;
 DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS attractions;
 
 -- Customers 
 CREATE TABLE customers (
@@ -93,4 +94,17 @@ INSERT INTO rooms (room_number, room_type, price, capacity, available) VALUES
 ('102', 'Double', 150.00, 2, 1),
 ('201', 'Suite', 250.00, 4, 1);
 
+-- Attractions (things to do around the lodge)
+CREATE TABLE attractions (
+    attraction_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    short_description TEXT,
+    image_url TEXT
+);
 
+-- Seed sample attractions -- 
+INSERT INTO attractions (name, short_description, image_url) VALUES
+('Kayaking Tours', 'Guided kayak tours exploring the bay.', 'kayaking.jpg'),
+('Hiking Trails', '25 miles of scenic hiking trails.', 'hiking.jpg'),
+('Whale Watching', 'Seasonal tours with marine life sightings.', 'whale_watching.jpg'),
+('Scuba Diving', 'Excursions for all skill levels.', 'scuba_diving.jpg');

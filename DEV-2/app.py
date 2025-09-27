@@ -161,6 +161,19 @@ def review(reservation_id):
     def about():   
         return render_template("about.html")
     
+# --- Attractions Page --- 
+@app.route("/attractions")
+def attractions():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT name, short_description, image_url FROM attractions")
+    attractions = cur.fetchall()
+    conn.close()
+
+    return render_template("attractions.html", attractions=attractions)
+
+
+    
 # --- Summary Page --- 
 @app.route("/summary")
 def summary():
@@ -198,3 +211,5 @@ def summary():
         available_rooms=available_rooms
     )
 
+if __name__ == "__main__":
+    app.run(debug=True)
