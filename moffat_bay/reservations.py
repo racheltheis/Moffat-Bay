@@ -132,12 +132,36 @@ def confirm_get(reservationid):
 @res_bp.route("/confirm/<int:reservationid>", methods=["POST"])
 def confirm_post(reservationid):
     action = request.form.get("action")
-    if action == "submit":
-        # logic to confirm reservation
-        flash("Reservation confirmed!", "success")
-    elif action == "cancel":
-        # logic to cancel reservation
-        flash("Reservation canceled.", "warning")
+    conn = get_conn()
+    cur = conn.cursor()
+
+    try:
+        if action == "submit":
+            # Update reservation to Confirmed
+            cur.execute(
+                "UPDATE Reservations SET Status='Confirmed' WHERE ReservationID=%s",
+                (reservationid,)
+            )
+            conn.commit()
+            flash("Reservation confirmed!", "success")
+
+        elif action == "cancel":
+            # Update reservation to Canceled
+            cur.execute(
+                "UPDATE Reservations SET Status='Canceled' WHERE ReservationID=%s",
+                (reservationid,)
+            )
+            conn.commit()
+            flash("Reservation canceled.", "warning")
+
+    except Exception as e:
+        conn.rollback()
+        flash(f"Error updating reservation: {e}", "error")
+
+    finally:
+        cur.close()
+        conn.close()
+
     return redirect(url_for("res.reservations"))
 
 # -----------------------------
@@ -156,6 +180,7 @@ def lookup():
             JOIN Rooms rm ON rm.RoomID = r.RoomID
             JOIN Customers c ON c.CustomerID = r.CustomerID
             WHERE r.ReservationID = %s OR c.Email = %s
+            Order by r.reservationID DESC        
         """, (q, q))
         results = cur.fetchall()
         cur.close(); conn.close()

@@ -43,6 +43,14 @@ def confirm():
 def lookup():
     return render_template("lookup.html")
 
+# ------------------------
+# attractions Page
+# ------------------------
+@app.route("/attractions")
+def attractions():
+    return render_template("attractions.html")
+
+
 
 
 

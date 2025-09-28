@@ -12,7 +12,7 @@
 		<nav class="navbar">
 			<ul>
         		<li><a href="{{ url_for('index') }}">HOME</a></li>
-        		<li><a href="#">ATTRACTIONS</a></li>
+        		<li><a href="{{ url_for('attractions') }}">Attractions</a></li>
         		<li class="active"><a href="{{ url_for('res.reservations') }}">RESERVATIONS</a></li>
         		<li class="right">
 					<a href="{{ url_for('auth.login_get') }}">My Account</a></li>|

@@ -4,16 +4,27 @@
 	<meta charset="UTF-8">
 		<title>Attractions - Moffat Bay Lodge</title>
   		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;700&family=Yellowtail&display=swap" rel="stylesheet">
-  		<link rel="stylesheet" href="attractions_styles.css">
+  		<link rel="stylesheet" href="{{ url_for('static', filename='attractions_styles.css') }}">
 </head>
 <body>
 
 	<nav class="navbar">
   		<ul>
-    		<li><a href="landing.html">Home</a></li>
-   			<li><a href="about.html">About Us</a></li>
-    		<li><a href="reservations.html">Reservations</a></li>
-    		<li class="right"><a href="register_and_signin.html">My Account</a></li>
+    		 <li><a href="{{ url_for('index') }}">HOME</a></li>
+            <li><a href="{{ url_for('about') }}">ABOUT US</a></li>
+            <li class="active"><a href="{{ url_for('res.reservations') }}">RESERVATIONS</a></li>
+            <li class="right">
+                <!-- My Account dropdown -->
+			  <li class="dropdown right">
+				<a href="javascript:void(0)" class="dropbtn">My Account</a>
+				<div class="dropdown-content">
+					<a href="{{ url_for('auth.login_get') }}">Login</a>
+					<a href="{{ url_for('res.lookup') }}">Lookup</a>
+			    </div>
+			   </li>
+
+			    <a href="{{ url_for('auth.logout') }}">Logout</a>
+			</li>
   		</ul>
 	</nav>
 
@@ -34,7 +45,8 @@
     				Tours also provide opportunities to learn about Moffat Bay's best-kept secrets, making it a perfect combination of adventure and serenity.
     				Reservations for rentals and tours can be made at the front desk or by phone. </p>
   				</div>
-  				<img src="images/kayaking.jpg" alt="Kayaking Tours">
+				<img src="{{ url_for('static', filename='images/kayaking.jpg') }}" alt="Kayaking Tours">
+  				
 			</article>
 
 			<article>
@@ -46,7 +58,8 @@
     				cave tours are available daily at 1 p.m. 
     				</p>
   				</div>
-  				<img src="images/hiking.jpg" alt="Hiking Trails">
+				<img src="{{ url_for('static', filename='images/hiking.jpg') }}" alt="Hiking Trails">
+  			
 			</article>
 
 			<article>
@@ -58,7 +71,8 @@
     				Tours run Thursday through Monday, starting at 10 a.m., and we recommend booking at least one week in advance as spots fill quickly. 
     				For pricing and reservations, please visit our front desk or give us a call. </p>
   				</div>
-  				<img src="images/whale_watching.jpg" alt="Whale Watching">
+				<img src="{{ url_for('static', filename='images/whale_watching.jpg') }}" alt="Whale Watching">
+  				
 			</article>
 
 			<article>
@@ -70,7 +84,8 @@
     				 Safety is our top priority—guests who are not already certified receive a complimentary diving course and competency test before their first dive.
     				 Our diving team leads dives from June to September, seven days a week. Reservations can be made by phone are at the front desk. </p>
   				</div>
-  				<img src="images/scuba_diving.jpg" alt="Scuba Diving">
+				<img src="{{ url_for('static', filename='images/scuba_diving.jpg') }}" alt="Scuba Diving">
+  			
 			</article>
   		</section>
 	</main>
