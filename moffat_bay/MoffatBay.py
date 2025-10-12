@@ -144,10 +144,10 @@ cursor.executemany("""
     INSERT INTO Rooms (Room_Number, Room_Type, Description, Max_Guests, Price_Per_Night, Status, Image_url)
     VALUES (%s, %s, %s, %s, %s, %s, %s)
 """, [
-    ('111', 'Double Full Beds', 'Double beds with patio view', 4, 120.00, 'Available', 'room111.jpg'),
-    ('112', 'Queen Bed', 'Queen bed with ocean view', 2, 135.00, 'Reserved', 'room112.jpg'),
-    ('211', 'Double Queen Beds', 'Double queen beds with patio view', 4, 150.00, 'Available', 'suite211.jpg'),
-    ('212', 'King Bed', 'King bed with ocean view', 2, 160.00, 'Maintenance', 'suite212.jpg')
+    ('111', 'Double Full Beds', 'Double beds with patio view', 4, 126.00, 'Available', 'room111.jpg'),
+    ('112', 'Queen Bed', 'Queen bed with ocean view', 2, 142.00, 'Reserved', 'room112.jpg'),
+    ('211', 'Double Queen Beds', 'Double queen beds with patio view', 4, 158.00, 'Available', 'suite211.jpg'),
+    ('212', 'King Bed', 'King bed with ocean view', 2, 168.00, 'Maintenance', 'suite212.jpg')
 ])
 
 # Reservations
