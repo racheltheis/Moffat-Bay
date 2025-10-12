@@ -23,7 +23,20 @@
 			    </div>
 			   </li>
 
-			    <a href="{{ url_for('auth.logout') }}">Logout</a>
+			      {% if session.get('email') %}
+                <div class="user-info">
+                    <span class="user-icon">👩‍💼</span>
+                    {% if session['user_name'] %}
+                    <span class="user-name">{{ session['user_name'] }}</span>
+                    {% endif %}
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+                </div>
+                {% else %}
+                <div class="user-info">
+                    <span class="user-icon">👩‍💼</span>
+                <a href="{{ url_for('auth.login_get') }}">Sign In</a>
+                    </div>
+                {% endif %}
 			</li>
   		</ul>
 	</nav>

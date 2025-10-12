@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Moffat Bay Lodge - About Us</title>
+	<link href="https://fonts.googleapis.com/css2?family=Yellowtail&family=Open+Sans:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{{ url_for('static', filename='about_styles.css') }}">
+</head>
+<body>
+	<header>
+		<nav class="navbar">
+			<ul>
+        		<li><a href="{{ url_for('index') }}">HOME</a></li>
+        		<li><a href="{{ url_for('attractions') }}">ATTRACTIONS</a></li>
+        		<li class="active"><a href="{{ url_for('res.reservations') }}">RESERVATIONS</a></li>
+        		<li class="right">
+					<a href="{{ url_for('auth.login_get') }}">My Account</a></li>|
+                	<a href="{{ url_for('auth.logout') }}">Logout</a></li>
+      		</ul>
+    	</nav>
+  	</header>
+
+	<section class="hero">
+		<h1>About Us</h1>
+    	<p class="hero-subtext">
+      	Four generations of family hospitality, making memories that last a lifetime.
+		<li class="booknow_button"><a href="{{ url_for('res.reservations') }}"> Book Now</a></li>
+  	</section>
+
+	<section class="contact-section">
+  		<div class="contact-box">
+    		<h2 class="contact-subheader">Get in Touch</h2>
+    		<div class="contact-columns">
+      			<div class="contact-left">
+        			<h3>Contact Information</h3>
+        			<p>Email: about@moffatbay.com</p>
+        			<p>Phone: +1 (555)033-1200</p>
+        			<p>Address: 100 Bay View Road, Moffat Bay, CA 94133 </p>
+      			</div>
+      			<div class="contact-right">
+        			<h3>Check-in Times</h3>
+        			<p>Check-in: 3:00 p.m.</p>
+        			<p>Check-out: 11:00 a.m. </p>
+        			<p>Reception: Daily 7 a.m. - 7 p.m. </p>
+      			</div>
+    		</div>
+  		</div>
+	</section>
+
+
+<section class="timeline-section">
+	<div class="timeline-line"></div>
+
+	<div class="timeline-row">
+    	<div class="timeline-photo left">
+			
+      		<img src="{{ url_for('static', filename='images/aboutUs_1.jpg') }}" alt="Vintage Moffat Bay Cove Photo">
+    	</div>
+    	<div class="timeline-text right">
+      		<h3>Our Story Begins</h3>
+      		<p>The Moffat Bay Lodge opened its doors in the spring of 1944. An instant hit with locals and tourists alike, 
+			it quickly became known for its excellent food, breathtaking views, and unforgettable marine expeditions. 
+			Founded by John Lawrence and his wife, Patty, and passed down through the generations, 
+			Moffat Bay Lodge remains family-owned and operated today. 
+      		</p>
+   		</div>
+    	<div class="timeline-dot"></div>
+  	</div>
+
+  	<div class="timeline-row">
+    	<div class="timeline-text left">
+      		<h3>Moffat Bay Today</h3>
+      		<p>Over the years, Moffat Bay Lodge has been renovated and updated to host more guests and offer modern luxuries, 
+			while still maintaining its reputation for excellence. Currently owned and operated by Vanessa Lawrence and family, 
+			Moffat Bay prioritizes creating unforgettable moments for all guests—adventurers and loungers alike. 
+			This year, we added two new offerings: scuba diving tours and the on-site Moffat Bay Spa. 
+			Guests have been raving about the seaweed wrap! </p>
+    	</div>
+    	<div class="timeline-photo right">
+			
+      		<img src="{{ url_for('static', filename='images/aboutUs_2.jpg') }}" alt="Moffat Bay Lodge Exterior">
+    	</div>
+    	<div class="timeline-dot"></div>
+  	</div>
+
+	<div class="timeline-row">
+    	<div class="timeline-photo left">
+      		<img src="{{ url_for('static', filename='images/aboutUs_3.jpg') }}" alt="Moffat Bay Wine Tasting">
+    	</div>
+    	<div class="timeline-text right">
+      		<h3>Our Commitment to Excellence</h3>
+      		<p> Moffat Bay Lodge understands that a great stay and memorable experience are the heart of our business. 
+			We offer knowledgeable concierge services to help our guests make the most of their visit. 
+			We are committed to excellence in everything we do, which is why we invest in sustainable and ethical practices, 
+			including ocean-friendly excursions, farm-to-table dining, and education reimbursement for our talented employees.
+      		</p>
+    	</div>
+    	<div class="timeline-dot"></div>
+  	</div>
+</section>
+
+
+
+	<footer class="footer">
+    	<p>© 2025 Moffat Bay Lodge. All Rights Reserved.</p>
+  	</footer>
+</body>
+</html>

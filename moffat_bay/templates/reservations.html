@@ -38,7 +38,8 @@
             <li><a href="{{ url_for('about') }}">ABOUT US</a></li>
             <li><a href="{{ url_for('attractions') }}">ATTRACTIONS</a></li>
            
-            <li class="right">
+                
+              <li class="right">
                 <!-- My Account dropdown -->
 			  <li class="dropdown right">
 				<a href="javascript:void(0)" class="dropbtn">My Account</a>
@@ -48,7 +49,20 @@
 			    </div>
 			   </li>
 
-			    <a href="{{ url_for('auth.logout') }}">Logout</a>
+			    {% if session.get('email') %}
+                <div class="user-info">
+                    <span class="user-icon">👩‍💼</span>
+                    {% if session['user_name'] %}
+                    <span class="user-name">{{ session['user_name'] }}</span>
+                    {% endif %}
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+                </div>
+                {% else %}
+                <div class="user-info">
+                    <span class="user-icon">👩‍💼</span>
+                <a href="{{ url_for('auth.login_get') }}">Sign In</a>
+                    </div>
+                {% endif %}
 			</li>
 
         </ul>

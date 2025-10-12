@@ -235,3 +235,23 @@ body {
 .dropdown:hover .dropdown-content {
 	display: block;
 }
+
+/* Human icon and username */
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .user-icon {
+      font-size: 22px;
+      color: #cde6ff;
+      text-shadow: 0 0 5px #6fb8ff;
+    }
+
+    .user-name {
+      margin-top: 4px;
+      font-weight: 500;
+      color: #cde6ff;
+    }

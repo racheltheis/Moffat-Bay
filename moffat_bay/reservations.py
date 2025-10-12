@@ -188,6 +188,16 @@ def lookup():
     return render_template("lookup.html", results=results, query=q)
 
 
+@res_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        return redirect(url_for('home'))
+    return render_template('login.html')
 
+@res_bp.route('/logout', methods=['POST'])
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('home'))
 
 
