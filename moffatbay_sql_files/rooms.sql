@@ -15,5 +15,9 @@ INSERT INTO Rooms (Room_Number, Room_Type, Description, Max_Guests, Price_Per_Ni
 VALUES
 ('111', 'Double Full Beds', 'Double beds with patio view', 4, 120.00, 'Available', 'room111.jpg'),
 ('112', 'Queen Bed', 'Queen bed with ocean view', 2, 135.00, 'Reserved', 'room112.jpg'),
-('211', 'Double Queen Beds', 'Double queen beds with patio view', 4, 150.00, 'Available', 'suite211.jpg');
+('211', 'Double Queen Beds', 'Double queen beds with patio view', 4, 150.00, 'Available', 'suite211.jpg'),
 ('212', 'King Bed', 'King bed with ocean view', 2, 160.00, 'Maintenance', 'suite212.jpg');
+
+-- Apply 5% price increase to all rooms
+UPDATE Rooms
+SET Price_Per_Night = ROUND(Price_Per_Night * 1.05, 0);
